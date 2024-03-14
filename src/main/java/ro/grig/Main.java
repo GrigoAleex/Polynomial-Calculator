@@ -1,17 +1,49 @@
 package ro.grig;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import ro.grig.app.actions.*;
+import ro.grig.app.config.AppProvider;
+import ro.grig.app.config.CalculatorProvider;
+import ro.grig.app.contracts.*;
+import ro.grig.app.controllers.PolynomialController;
+import ro.grig.frontend.Window;
+import ro.grig.routing.Route;
+import ro.grig.routing.Router;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+public class Main extends Application {
+    public void start(Stage primaryStage) {
+        new Window(primaryStage);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        Router.go("home");
+    }
+
+    public static void main(String[] args) {
+        loadConfig();
+        launch(args);
+    }
+
+    private static void loadRoutes() {
+        Router.add(new Route("home", PolynomialController.class, "index"));
+        Router.add(new Route("calculate", PolynomialController.class, "calculate"));
+    }
+
+    private static void loadConfig() {
+        loadRoutes();
+        AppProvider.set(AddsPolynomials.class, new AddPolynomials());
+        AppProvider.set(SubtractsPolynomials.class, new SubtractPolynomials());
+        AppProvider.set(MultipliesPolynomials.class, new MultiplyPolynomials());
+        AppProvider.set(DividesPolynomials.class, new DividePolynomials());
+        AppProvider.set(DerivesPolynomials.class, new DerivePolynomials());
+        AppProvider.set(IntegratesPolynomials.class, new IntegratePolynomials());
+
+        CalculatorProvider.set("add", AddsPolynomials.class);
+        CalculatorProvider.set("subtract", SubtractsPolynomials.class);
+        CalculatorProvider.set("multiply", MultipliesPolynomials.class);
+        CalculatorProvider.set("divide", DividesPolynomials.class);
+        CalculatorProvider.set("derive", DerivesPolynomials.class);
+        CalculatorProvider.set("integrate", IntegratesPolynomials.class);
     }
 }
