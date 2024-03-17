@@ -33,6 +33,5 @@ public class Window {
         if (viewPath == null) throw new ViewNotFoundException();
 
         window.stage.setScene(new Scene(FXMLLoader.load(viewPath)));
-
     }
 }
