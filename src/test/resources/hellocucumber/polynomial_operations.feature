@@ -1,6 +1,3 @@
-
-
-
 Feature: Polynomial Mathematical Operations
 
   Scenario: Adding two polynomials
