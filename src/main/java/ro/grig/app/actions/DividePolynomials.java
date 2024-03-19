@@ -20,10 +20,11 @@ public class DividePolynomials implements DividesPolynomials {
     // Daca vreau sa fac impartirea trebuie rulata aceasta functie de 2 ori. as putea face un cache cu cele mai recente
     // impartiri si sa iau de acolo ce am nevoie
     private Polynomial compute(Polynomial P, Polynomial Q, Boolean returnReminder) {
-        if (Q.getRank() > P.getRank()) return new Polynomial("");
+        if (Q.getRank() > P.getRank()) return returnReminder ? P : new Polynomial("");
 
         Polynomial remainder = P;
         remainder.setRank(P.getRank());
+
 
         int rankQ = Q.getRank();
         Double qMonomialCoefficient = Q.getMonomialCoefficient(Q.getRank());
